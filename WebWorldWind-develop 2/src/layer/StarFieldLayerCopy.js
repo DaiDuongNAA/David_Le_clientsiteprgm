@@ -62,7 +62,7 @@ define([
          * @augments Layer
          */
         var StarFieldLayer = function (starDataSource) {
-            Layer.call(this, 'StarField1');
+            Layer.call(this, 'Customized Layer');
 
             // The StarField Layer is not pickable.
             this.pickEnabled = false;

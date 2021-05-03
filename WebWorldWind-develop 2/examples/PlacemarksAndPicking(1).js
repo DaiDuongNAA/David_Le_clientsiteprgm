@@ -28,8 +28,8 @@
 /**
  * Illustrates how to display and pick Placemarks.
  */
-requirejs(['./WorldWindShim',
-        './LayerManager'],
+requirejs(['./LayerManager(1)',
+        './CustomPlacemark(2)'],
     function (WorldWind,
               LayerManager) {
         "use strict";
@@ -42,7 +42,7 @@ requirejs(['./WorldWindShim',
 
         // Create and add layers to the WorldWindow.
         var layers = [
-            // Imagery layers.
+            // Imagery layers
             {layer: new WorldWind.BMNGLayer(), enabled: true},
             {layer: new WorldWind.BMNGLandsatLayer(), enabled: false},
             //{layer: new WorldWind.BingAerialWithLabelsLayer(null), enabled: true},
@@ -63,7 +63,7 @@ requirejs(['./WorldWindShim',
 
         // Define the images we'll use for the placemarks.
         var images = [
-            "plain-black.png",
+            /*"plain-black.png",
             "plain-blue.png",
             "plain-brown.png",
             "plain-gray.png",
@@ -83,7 +83,9 @@ requirejs(['./WorldWindShim',
             "castshadow-purple.png",
             "castshadow-red.png",
             "castshadow-teal.png",
-            "castshadow-white.png"
+            "castshadow-white.png",*/
+            "plain-teal.png",
+            "AbstImg.png"
         ];
 
         var pinLibrary = WorldWind.configuration.baseUrl + "images/pushpins/", // location of the image files
@@ -91,8 +93,8 @@ requirejs(['./WorldWindShim',
             placemarkAttributes = new WorldWind.PlacemarkAttributes(null),
             highlightAttributes,
             placemarkLayer = new WorldWind.RenderableLayer("Placemarks"),
-            latitude = 47.684444,
-            longitude = -121.129722;
+            latitude = 12.88,
+            longitude = -156.07;
 
         // Set up the common placemark attributes.
         placemarkAttributes.imageScale = 1;
@@ -110,7 +112,7 @@ requirejs(['./WorldWindShim',
         // For each placemark image, create a placemark with a label.
         for (var i = 0, len = images.length; i < len; i++) {
             // Create the placemark and its label.
-            placemark = new WorldWind.Placemark(new WorldWind.Position(latitude, longitude + i, 1e2), true, null);
+            placemark = new WorldWind.Placemark(new WorldWind.Position(12.88, -156.07  + i, 1e2), true, null);
             placemark.label = "Placemark " + i.toString() + "\n"
                 + "Lat " + placemark.position.latitude.toPrecision(4).toString() + "\n"
                 + "Lon " + placemark.position.longitude.toPrecision(5).toString();
@@ -142,6 +144,7 @@ requirejs(['./WorldWindShim',
 
         // The common pick-handling function.
         var handlePick = function (o) {
+            console.log("Hello")
             // The input argument is either an Event or a TapRecognizer. Both have the same properties for determining
             // the mouse or tap location.
             var x = o.clientX,
@@ -187,8 +190,8 @@ requirejs(['./WorldWindShim',
         };
 
         // Listen for mouse moves and highlight the placemarks that the cursor rolls over.
-        wwd.addEventListener("mousemove", handlePick);
-
+        wwd.addEventListener("click", handlePick);
+ //console.log(wwd.addEventListener);
         // Listen for taps on mobile devices and highlight the placemarks that the user taps.
         var tapRecognizer = new WorldWind.TapRecognizer(wwd, handlePick);
 
