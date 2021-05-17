@@ -61,7 +61,8 @@ requirejs(['./WorldWindShim',
 // Position Variables
         var lat = 36.7783;
         var long = -119.4179;
-
+        var lat1 = 40.7128;
+        var long1 = -74.0060;
         // Create the custom image for the placemark with a 2D canvas.
         var canvas = document.createElement("canvas"),
             ctx2d = canvas.getContext("2d"),
@@ -81,12 +82,18 @@ requirejs(['./WorldWindShim',
 
         // Set placemark attributes.
         var placemarkAttributes = new WorldWind.PlacemarkAttributes(null);
+        var placemarkAttributes1 = new WorldWind.PlacemarkAttributes(null);
         // Wrap the canvas created above in an ImageSource object to specify it as the placemarkAttributes image source.
         placemarkAttributes.imageSource = new WorldWind.ImageSource(canvas);
+        placemarkAttributes1.imageSource = new WorldWind.ImageSource(canvas);
         // Define the pivot point for the placemark at the center of its image source.
         placemarkAttributes.imageOffset = new WorldWind.Offset(WorldWind.OFFSET_FRACTION, 0.5, WorldWind.OFFSET_FRACTION, 0.5);
         placemarkAttributes.imageScale = 1;
         placemarkAttributes.imageColor = WorldWind.Color.WHITE;
+
+        placemarkAttributes1.imageOffset = new WorldWind.Offset(WorldWind.OFFSET_FRACTION, 0.5, WorldWind.OFFSET_FRACTION, 0.5);
+        placemarkAttributes1.imageScale = 1;
+        placemarkAttributes1.imageColor = WorldWind.Color.BLUE;
 
         // Set placemark highlight attributes.
         // Note that the normal attributes are specified as the default highlight attributes so that all properties
@@ -95,23 +102,32 @@ requirejs(['./WorldWindShim',
         var highlightAttributes = new WorldWind.PlacemarkAttributes(placemarkAttributes);
         highlightAttributes.imageScale = 1.2;
 
+        var highlightAttributes1 = new WorldWind.PlacemarkAttributes(placemarkAttributes1);
+        highlightAttributes1.imageScale = 1.2;
+
+
         // Create the placemark with the attributes defined above.
         var placemarkPosition = new WorldWind.Position(lat, long, 1e2);
-        console.log("placemarkPosition")
+        var placemarkPosition1 = new WorldWind.Position(lat1, long1, 1e2);
+        //console.log("placemarkPosition")
         var placemark = new WorldWind.Placemark(placemarkPosition, false, placemarkAttributes);
+        var placemark1 = new WorldWind.Placemark(placemarkPosition1, false, placemarkAttributes);
         // Draw placemark at altitude defined above, relative to the terrain.
         placemark.altitudeMode = WorldWind.RELATIVE_TO_GROUND;
+        placemark1.altitudeMode = WorldWind.RELATIVE_TO_GROUND;
         // Assign highlight attributes for the placemark.
         placemark.highlightAttributes = highlightAttributes;
+        placemark1.highlightAttributes = highlightAttributes;
 
         // Create the renderable layer for placemarks.
         var placemarkLayer = new WorldWind.RenderableLayer("Custom Placemark...");
-
+        var placemarkLayer1 = new WorldWind.RenderableLayer("Custom Placemark1...");
         // Add the placemark to the layer.
         placemarkLayer.addRenderable(placemark);
-
+        placemarkLayer1.addRenderable(placemark1)
         // Add the placemarks layer to the WorldWindow's layer list.
         wwd.addLayer(placemarkLayer);
+        wwd.addLayer(placemarkLayer1);
 
         // Now set up to handle highlighting.
         //var highlightController = new WorldWind.HighlightController(wwd);
@@ -450,6 +466,16 @@ if (pickList.objects[p].position == placemarkPosition){
     console.log("lao")
 
 }
+
+                        if (pickList.objects[p].position == placemarkPosition1){
+
+                            modal1.style.display = "block";
+                            // addEventListener("click", placemark)
+
+                            //surfaceImageLayer = true;
+                            console.log("lao1")
+
+                        }
 /*
                         var btn = document.getElementById("myBtn");
 
@@ -512,19 +538,50 @@ if (pickList.objects[p].position == placemarkPosition){
         var span = document.getElementsByClassName("close")[0];
 
         // When the user clicks the button, open the modal
+        /*
         btn.onclick = function() {
             modal.style.display = "block";
         }
+
+         */
 
         // When the user clicks on <span> (x), close the modal
         span.onclick = function() {
             modal.style.display = "none";
         }
-
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
             if (event.target == modal) {
+                console.log("qw")
                 modal.style.display = "none";
+            }
+        }
+        ////
+
+        var modal1 = document.getElementById("myModal1");
+
+        // Get the button that opens the modal
+        var btn1 = placemark;
+
+        // Get the <span> element that closes the modal
+        var span1 = document.getElementsByClassName("close1")[0];
+/*
+        // When the user clicks the button, open the modal
+        btn1.onclick = function() {
+            modal1.style.display = "block";
+        }
+
+ */
+
+        // When the user clicks on <span> (x), close the modal
+        span1.onclick = function() {
+            modal1.style.display = "none";
+        }
+        // // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal1) {
+                modal1.style.display = "none";
+                console.log("wq")
             }
         }
 
